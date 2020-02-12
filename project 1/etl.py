@@ -7,10 +7,15 @@ from sql_queries import *
 
 def process_song_file(cur, filepath):
     """
-    this method is to process and perists each song file accepting song file path.
-    Data is persisted in db
-    
-    
+    Description: This function can be used to read the file in the filepath (data/song_data)
+    to get the song and artist info and used to populate the song and artist dim tables.
+
+    Arguments:
+        cur: the cursor object. 
+        filepath: song data file path. 
+
+    Returns:
+        None
     """
     # open song file
     df = pd.read_json(filepath, lines=True)
@@ -26,10 +31,15 @@ def process_song_file(cur, filepath):
 
 def process_log_file(cur, filepath):
     """
-    this method is to process and perists each log file accepting log file path.
-    Data is persisted in db
-    
-    
+    Description: This function can be used to read the file in the filepath (data/log_data)
+    to get the user and time info and used to populate the users and time dim tables.
+
+    Arguments:
+        cur: the cursor object. 
+        filepath: log data file path. 
+
+    Returns:
+        None
     """
     # open log file
     df = pd.read_json(filepath, lines=True)
@@ -74,13 +84,16 @@ def process_log_file(cur, filepath):
 
 def process_data(cur, conn, filepath, func):
     """
-    this method is used to process data
-    
-    Accepts:
-        filepath : path of data file
-        func: pass by reference for methonds
-        cur and conn: db objects to execute/run a query
-    
+    Description: This function can be used to get all files matching extension from directory, get total number of files and iterate over files and process.
+
+    Arguments:
+        cur: the cursor object.
+        conn: database connection.
+        filepath: log/song data file path. 
+        func: pointer to methods processing song or data files.
+
+    Returns:
+        None
     """
     # get all files matching extension from directory
     all_files = []
@@ -102,7 +115,13 @@ def process_data(cur, conn, filepath, func):
 
 def main():
     """
-    this is the entry point (main method) for our application
+    Description: This is the entry point for the class file processing the data files.
+
+    Arguments:
+        None
+
+    Returns:
+        None
     """
     conn = psycopg2.connect("host=127.0.0.1 dbname=sparkifydb user=student password=student")
     cur = conn.cursor()
